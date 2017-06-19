@@ -1,0 +1,20 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+
+##
+library(dplyr)
+df %>%
+  select(id,
+         principal_investigator_name,
+         study_type,
+         study_objective,
+         timestamp_start,
+         timestamp_end,
+         bounding_box)
+```
+

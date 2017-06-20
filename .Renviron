@@ -1,0 +1,7 @@
+
+## We supply these as generic user credentials for testing purposes.
+## These credentials are not secret, please do not use them to upload data you
+## intended to keep private.
+
+MOVEBANK_USER="movebank-package"
+MOVEBANK_PW="Xhu74^Vo5pkp"

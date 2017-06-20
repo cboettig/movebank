@@ -1,8 +1,14 @@
 ---
-title: "Examples"
 output: github_document
 ---
 
+
+# movebank
+
+
+## Installing:
+
+## Use
 
 ```{r message=FALSE}
 library("movebank")
@@ -22,6 +28,19 @@ study <- movebank("study")
 ```
 
 
+
+Example: use `ritis` to search for all matches to a given higher-level taxonomic group, e.g. all birds, all reptiles.
+
+Example: Look up scientific name, or add common names to data.
+
+```{r message=FALSE}
+#library(ritis)
+```
+
+```{r}
+tag_ex <- movebank("tag", study_id=2911040)
+event_ex <- movebank("event", study_id=2911040)
+```
 
 ```{r}
 df %>%

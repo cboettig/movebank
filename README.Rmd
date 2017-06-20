@@ -61,15 +61,25 @@ study %>% filter(grepl("Lesser Kestrels", name)) %>% select(id, name, i_can_see_
 public <- study %>% filter(i_can_see_data == "true") %>% pull(id)
 ```
 
-Let's see if we can get data from any of the `individual` tables. We'll try every study:
+Let's see if we can get data from any of the `individual` tables. We'll try every public study:
 
 ```{r message=FALSE}
 individual <- map(public, safely(function(i) movebank("individual", study_id = i)))
-tag <- map(public, safely(function(i) movebank("tag", study_id = i)))
+tag <- map(public, safely(function(i) movebank("tag", study_id = i))) 
 event <- map(public, safely(function(i) movebank("event", study_id = i)))
 
-## cases where we can see data
-sum(!sapply(individual, is.character))
+## not so much
+individual <- map(individual, "result")
+sum(sapply(individual, is.data.frame))
+
+
+tag <- map(tag, "result")
+sum(sapply(tag, is.data.frame))
+event <- map(event, "result")
+sum(sapply(event, is.data.frame))
+
+
+
 ```
 
 
@@ -124,5 +134,27 @@ df %>%
          timestamp_start,
          timestamp_end,
          bounding_box)
+```
+
+# move package comparison
+
+testing move commands:
+
+```{r}
+library("move")
+login <- movebankLogin(username=Sys.getenv("MOVEBANK_USER"), password=Sys.getenv("MOVEBANK_PW"))
+
+## all sensors
+sensors <- getMovebankSensors(login=login)
+
+ex_sensorAttr <- getMovebankSensorsAttributes("BCI Ocelot",login=login)
+ex_individuals <- getMovebankAnimals(study="BCI Ocelot",login=login)
+indiv_path <- getMovebankData(study="BCI Ocelot", animalName="Bobby", login=login)
+
+## study id for BCI Ocelot. (methods can use id, recognized by int signature)
+ocelot <- 123413
+ex_sensorAttr <- getMovebankSensorsAttributes(ocelot,login=login)
+
+
 ```
 

@@ -1,5 +1,5 @@
 {
-
+"term_definitions": "https://www.movebank.org/node/2381",
 "Optional_parameter": "header-format:underscore",
 "note": "When connecting via https you must specify the parameters user:... and password:... Specify output attributes and filter conditions depending on the entity type.",
 

@@ -89,6 +89,8 @@ tag <- tag[who]
 event <- event[who]
 ```
 
+Okay, we have real data for these 46 core datasets.
+
 
 
 

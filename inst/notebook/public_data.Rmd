@@ -1,0 +1,61 @@
+---
+output: github_document
+---
+
+
+# movebank
+
+```{r}
+knitr::opts_chunk$set(message=FALSE)
+```
+
+## Use
+
+```{r message=FALSE}
+library("movebank")
+library("tidyverse")
+library("sf")
+```
+
+```{r}
+readRenviron("../../.Renviron")
+```
+
+
+For some endpoints we can successfully get the full table in a single call:
+
+```{r message = FALSE}
+study <- movebank("study") ## temporal & geographic coverage, but no species coverage information
+taxon <- movebank("taxon") ## Purely a taxonomic database, has no connection to study
+tag_type <- movebank("tag_type") ## small table listing information the different types of animal tracker tags
+```
+
+The 46 datasets for which public data actually seems to be avaliable. (the `study` table suggests `r sum(study$i_can_see_data =="true")` datasets have `i_can_see_data`, but querying on those datasets finds otherwise.  Maybe the others have some license condition to accept first?  Still, notable inconsistencies between the use of this flag and the actual data download, see `examples.md` notes).  
+
+
+```{r}
+public <- read_csv("../../public_ids.csv")[[1]]
+```
+
+Okay, we're ready to download the main data files for these studies.  The movement data itself is found in the `event` table.  More information about the individuals involved in the study, including the species identification, is given separately in the `individuals` table.  
+
+```{r}
+## helper function to bind all results into single data frame.
+movebank_df <- function(ids, entity){
+  df <- 
+    map(ids, 
+      safely(function(i) 
+        movebank(entity, study_id = i, guess_types=FALSE))) %>%
+    map_df("result", .id = "study")
+  
+  ## create a column with study id as the name
+  tmp <- data_frame(study_id = ids, study = as.character(1:length(ids)))
+  select(left_join(df, tmp, "study"), -study)
+}
+
+individual <- movebank_df(public, "individual")
+tag <- movebank_df(public, "tag")
+event <- movebank_df(public, "event")
+
+
+```

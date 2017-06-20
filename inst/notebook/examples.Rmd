@@ -1,8 +1,14 @@
 ---
-title: "Examples"
 output: github_document
 ---
 
+
+# movebank
+
+
+## Installing:
+
+## Use
 
 ```{r message=FALSE}
 library("movebank")
@@ -14,14 +20,103 @@ library("sf")
 readRenviron(".Renviron")
 ```
 
-Getting the full datasets can take a little while:
+
+For some endpoints we can successfully get the full table in a single call:
 
 ```{r message = FALSE}
-taxon <- movebank("taxon")
-study <- movebank("study")
+study <- movebank("study") ## temporal & geographic coverage, but no species coverage information
+taxon <- movebank("taxon") ## Purely a taxonomic database, has no connection to study
+tag_type <- movebank("tag_type") ## small table listing information the different types of animal tracker tags
 ```
 
 
+```{r}
+study$i_can_see_data %>% as.logical() %>% sum()
+```
+
+```{r}
+study$there_are_data_which_i_cannot_see %>% as.logical() %>% sum()
+```
+
+That seems terribly optimistic.  For instance, 
+
+```{r}
+study[1,]$there_are_data_which_i_cannot_see
+```
+
+claims there are data for this study, even though the online search tool says there are not.  
+
+Even studies that do show up when I check the "Only studies where I can see data" option in the online tool often seem to tell me that "there is no data available to download" (e.g. study titled "a week in the life of a pygmy blue whale").
+
+Other studies (e.g. the study titled "(EBD) Lesser Kestrels") does let me download the data after accepting an agreement.  
+
+```{r}
+study %>% filter(grepl("Lesser Kestrels", name)) %>% select(id, name, i_can_see_data, there_are_data_which_i_cannot_see)
+```
+
+- How do I request ESRI format for data download?  (online tool gives this option)
+
+
+```{r}
+public <- study %>% filter(i_can_see_data == "true") %>% pull(id)
+```
+
+Let's see if we can get data from any of the `individual` tables. We'll try every public study:
+
+```{r message=FALSE}
+individual <- map(public, safely(function(i) movebank("individual", study_id = i)))
+tag <- map(public, safely(function(i) movebank("tag", study_id = i))) 
+event <- map(public, safely(function(i) movebank("event", study_id = i)))
+
+## not so much
+individual <- map(individual, "result")
+sum(sapply(individual, is.data.frame))
+
+
+tag <- map(tag, "result")
+sum(sapply(tag, is.data.frame))
+event <- map(event, "result")
+sum(sapply(event, is.data.frame))
+
+who <- sapply(event, is.data.frame)
+who2 <- sapply(tag, is.data.frame)
+identical(who, who2) ## same 46 with data?
+
+## just the data please
+id <- public[who] # the actually public data
+individual <- individual[who]
+tag <- tag[who]
+event <- event[who]
+```
+
+Okay, we have real data for these 46 core datasets...
+
+
+
+
+
+
+-----------
+
+Getting the actual data requires we accept the license terms first.
+Connect taxonomic information to study data:  Taxonomic information can only be found in the "individual" table (which fortunately also has a key to `study_id`).  
+
+
+
+----
+
+Example: use `ritis` to search for all matches to a given higher-level taxonomic group, e.g. all birds, all reptiles.
+
+Example: Look up scientific name, or add common names to data.
+
+```{r message=FALSE}
+#library(ritis)
+```
+
+```{r}
+tag_ex <- movebank("tag", study_id=2911040)
+event_ex <- movebank("event", study_id=2911040)
+```
 
 ```{r}
 df %>%
@@ -32,5 +127,36 @@ df %>%
          timestamp_start,
          timestamp_end,
          bounding_box)
+```
+
+# move package comparison
+
+testing move commands:
+
+```{r}
+library("move")
+login <- movebankLogin(username=Sys.getenv("MOVEBANK_USER"), password=Sys.getenv("MOVEBANK_PW"))
+
+## the tag_type table
+sensors <- getMovebankSensors(login=login)
+
+ex_sensorAttr <- getMovebankSensorsAttributes("BCI Ocelot",login=login)
+ex_individuals <- getMovebankAnimals(study="BCI Ocelot",login=login)
+indiv_path <- getMovebankData(study="BCI Ocelot", animalName="Bobby", login=login)
+
+## study id for BCI Ocelot. (methods can use id, recognized by int signature)
+ocelot <- 123413
+ex_sensorAttr <- getMovebankSensorsAttributes(ocelot,login=login)
+```
+
+```{r}
+study_table <- getMovebank("study", login=login)
+```
+
+
+`move` seems to have forgotten the filter, or seems to think that requesting attribute column is the same thing as requesting where that attribute column evaluates to "true"?  Note there is no way here to get the rest of the study info.  
+
+```{r}
+showMethods("getMovebankStudies", includeDefs = TRUE)
 ```
 

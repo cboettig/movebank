@@ -78,8 +78,15 @@ sum(sapply(tag, is.data.frame))
 event <- map(event, "result")
 sum(sapply(event, is.data.frame))
 
+who <- sapply(event, is.data.frame)
+who2 <- sapply(tag, is.data.frame)
+identical(who, who2) ## same 46 with data?
 
-
+## just the data please
+id <- public[who] # the actually public data
+individual <- individual[who]
+tag <- tag[who]
+event <- event[who]
 ```
 
 
@@ -90,25 +97,9 @@ sum(sapply(event, is.data.frame))
 -----------
 
 Getting the actual data requires we accept the license terms first.
-
-Data tables for individual, tag, and event require a study-id to avoid a 500-error.
-
-```{r}
-movebank("individual", study_id=study$id[[1]])
-movebank("tag", study_id=study$id[[1]])
-movebank("event", study_id=study$id[[1]])
-```
-
-
-
-```{r}
-sensor <- movebank("sensor", external_id=tag_type$external_id[[1]])
-```
-
-
 Connect taxonomic information to study data:  Taxonomic information can only be found in the "individual" table (which fortunately also has a key to `study_id`).  
 
-Unfortunately, most data in the `individual` table cannot be accepted 
+
 
 ----
 
@@ -144,7 +135,7 @@ testing move commands:
 library("move")
 login <- movebankLogin(username=Sys.getenv("MOVEBANK_USER"), password=Sys.getenv("MOVEBANK_PW"))
 
-## all sensors
+## the tag_type table
 sensors <- getMovebankSensors(login=login)
 
 ex_sensorAttr <- getMovebankSensorsAttributes("BCI Ocelot",login=login)
@@ -154,7 +145,16 @@ indiv_path <- getMovebankData(study="BCI Ocelot", animalName="Bobby", login=logi
 ## study id for BCI Ocelot. (methods can use id, recognized by int signature)
 ocelot <- 123413
 ex_sensorAttr <- getMovebankSensorsAttributes(ocelot,login=login)
+```
+
+```{r}
+study_table <- getMovebank("study", login=login)
+```
 
 
+`move` seems to have forgotten the filter, or seems to think that requesting attribute column is the same thing as requesting where that attribute column evaluates to "true"?  Note there is no way here to get the rest of the study info.  
+
+```{r}
+showMethods("getMovebankStudies", includeDefs = TRUE)
 ```
 

@@ -1,0 +1,43 @@
+{
+
+"Optional_parameter": "header-format:underscore",
+"note": "When connecting via https you must specify the parameters user:... and password:... Specify output attributes and filter conditions depending on the entity type.",
+
+"entity_types": [{
+  "type": "study",
+  "attributes": ["access_profile_download_id", "access_profile_id",  "acknowledgements", "bounding_box", "citation", "comments", "contact_person_id", "default_profile_eventdata_id", "default_profile_refdata_id", "external_id", "external_id_namespace_id", "grants_used", "has_quota", "i_am_owner", "i_can_see_data", "id", "license_terms", "location_description", "main_location_lat", "main_location_long", "name", "number_of_deployments", "number_of_events", "number_of_individuals", "number_of_tags", "principal_investigator_address", "principal_investigator_email", "principal_investigator_id", "principal_investigator_name", "study_id", "study_objective", "study_type", "suspend_license_terms", "there_are_data_which_i_cannot_see", "timestamp_end", "timestamp_start"]
+  },
+  {
+  "type":"individual",
+  "attributes": ["access_profile_id", "comments", "death_comments", "default_profile_eventdata_id", "earliest_date_born", "exact_date_of_birth", "external_id", "external_id_namespace_id", "i_am_owner", "id", "latest_date_born", "local_identifier", "ring_id", "sex", "study_id", "taxon_canonical_name", "taxon_id"]
+  },
+  {
+  "type":"tag",
+  "attributes": ["access_profile_id", "beacon_frequency", "comments", "external_id", "external_id_namespace_id", "i_am_owner", "id", "local_identifier", "manufacturer_name", "model", "processing_type", "serial_no", "study_id", "tag_failure_comments", "tag_production_date", "tag_type_id", "weight"]
+  },
+  {
+  "type":"sensor",
+  "attributes": ["external_id", "external_id_namespace_id", "id", "manufacturer_name", "model", "sensor_type_id", "tag_id", "tag_study_id"]
+  },
+  {
+  "type":"tag_type",
+ "attributes": ["description", "external_id", "external_id_namespace_id", "id", "is_location_sensor", "name"]
+  },
+  {
+  "type":"taxon",
+  "attributes": ["author_string", "canonical_name", "external_id", "external_id_namespace_id", "hierarchy_string", "id", "name_1", "name_2", "name_3", "parent_taxon_id", "tsn", "valid"]
+  },
+  {
+  "type":"deployment",
+  "attributes": ["access_profile_id", "animal_life_stage", "animal_mass", "animal_reproductive_condition", "attachment_type", "behavior_according_to", "comments", "data_processing_software", "deploy_off_latitude", "deploy_off_longitude", "deploy_off_person", "deploy_off_timestamp", "deploy_on_latitude", "deploy_on_longitude", "deploy_on_person", "deploy_on_timestamp", "deployment_end_comments", "deployment_end_type", "duty_cycle", "external_id", "external_id_namespace_id", "geolocator_calibration", "geolocator_light_threshold", "geolocator_sensor_comments", "geolocator_sun_elevation_angle", "habitat_according_to", "i_am_owner", "id", "individual_id", "local_identifier", "location_accuracy_comments", "manipulation_comments", "manipulation_type", "partial_identifier", "study_id", "study_site", "tag_id", "tag_readout_method"]
+  },
+  {
+  "type": "event",
+  "attributes": ["acceleration_axes", "acceleration_raw_x", "acceleration_raw_y", "acceleration_raw_z", "acceleration_sampling_frequency_per_axis", "acceleration_x", "acceleration_y", "acceleration_z", "accelerations_raw", "activity_count", "activity_count", "algorithm_marked_outlier", "argos_altitude", "argos_best_level", "argos_calcul_freq", "argos_error_radius", "argos_gdop", "argos_iq", "argos_lat1", "argos_lat2", "argos_lc", "argos_lon1", "argos_lon2", "argos_nb_mes", "argos_nb_mes_120", "argos_nb_mes_identical", "argos_nopc", "argos_orientation", "argos_pass_duration", "argos_sat_id", "argos_semi_major", "argos_semi_minor", "argos_sensor_1", "argos_sensor_2", "argos_sensor_3", "argos_sensor_4", "argos_transmission_timestamp", "argos_valid_location_algorithm", "argos_valid_location_manual", "barometric_depth", "barometric_height", "barometric_pressure", "bas_compensated_latitute", "bas_confidence", "bas_fix_type", "bas_mid_value_secs", "bas_stationary_latitute", "bas_transition_1", "bas_transition_2", "battery_charge_percent", "battery_charging_current", "behavioural_classification", "comments", "compass_heading", "deployment_id", "eobs_acceleration_axes", "eobs_acceleration_sampling_frequency_per_axis", "eobs_accelerations_raw", "eobs_activity", "eobs_activity_samples", "eobs_battery_voltage", "eobs_fix_battery_voltage", "eobs_horizontal_accuracy_estimate", "eobs_key_bin_checksum", "eobs_speed_accuracy_estimate", "eobs_start_timestamp", "eobs_status", "eobs_temperature", "eobs_type_of_fix", "eobs_used_time_to_get_fix", "event_id", "event_set_id", "external_temperature", "flt_switch", "gps_dop", "gps_fix_type", "gps_hdop", "gps_maximum_signal_strength", "gps_satellite_count", "gps_time_to_fix", "gps_vdop", "ground_speed", "gsm_mcc_mnc", "gsm_signal_strength", "gt_activity_count", "gt_sys_week", "gt_tx_count", "habitat", "heading", "height_above_ellipsoid", "height_above_msl", "height_raw", "individual_id", "internal_temperature", "light_level", "location_error_numerical", "location_error_percentile", "location_error_text", "location_lat", "location_long", "magnetic_field_raw_x", "magnetic_field_raw_y", "magnetic_field_raw_z", "manually_marked_outlier", "manually_marked_valid", "migration_stage", "migration_stage_standard", "modelled", "mw_activity_count", "mw_show_in_kml", "ornitela_transmission_protocol", "proofed", "raptor_workshop_behaviour", "raptor_workshop_deployment_special_event", "raptor_workshop_migration_state", "sensor_type_id", "study_id", "study_specific_measurement", "tag_battery_voltage", "tag_id", "tag_tech_spec", "tag_voltage", "technosmart_activity", "technosmart_signal_quality", "tilt_angle", "tilt_x", "tilt_y", "tilt_z", "timestamp", "transmission_timestamp", "underwater_count", "underwater_time", "update_ts", "vertical_error_numerical", "visible", "waterbird_workshop_behaviour", "waterbird_workshop_deployment_special_event", "waterbird_workshop_migration_state"]
+  },
+  {
+  "type":"study_attribute",
+  "attributes": ["data_type", "sensor_type_id", "short_name", "study_id"]
+  }],
+  "Example query": "?entity-type=individual&study=80355,80725&attributes=id,local-identifier,taxon"
+}

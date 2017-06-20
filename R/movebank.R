@@ -5,7 +5,7 @@ base <- "https://www.movebank.org/movebank/service/direct-read"
 #' movebank
 #'
 #' Read data from movebank
-#' @param table Name of the table, see details
+#' @param table Name of the table, see details. If NULL, text listing possible tables and their attributes is returned.
 #' @param ... additional fields to filter on as named list, depends on table selecte
 #' @param user username. Will be read from Sys.getenv("MOVEBANK_USER") if not supplied, register at https://www.movebank.org/
 #' @param password user password. Will be read from Sys.getenv("MOVEBANK_PW") if not supplied, register at https://www.movebank.org/
@@ -24,7 +24,8 @@ base <- "https://www.movebank.org/movebank/service/direct-read"
 movebank <- function(table = NULL,
                      ...,
                      user = Sys.getenv("MOVEBANK_USER"),
-                     password = Sys.getenv("MOVEBANK_PW")){
+                     password = Sys.getenv("MOVEBANK_PW"),
+                     encoding = "UTF-8"){
 
 ## As listed by https://www.movebank.org/movebank/service/direct-read?attributes
 ## The possible entity types are:
@@ -36,10 +37,16 @@ movebank <- function(table = NULL,
     query <- list(entity_type = table, ...)
   }
 
+  ## write methods to use select & filter verbs, taxon %>% select(study_id) %>% filter(study) %>% call_api()
+
+  ## FIXME adjust so that we can take lists of studies, or filters
+  #"Example query": "?entity-type=individual&study=80355,80725&attributes=id,local-identifier,taxon"
+
+
   auth <- httr::authenticate(user, password)
   resp <- httr::GET(base, query = query, auth)
   httr::warn_for_status(resp)
-  httr::content(resp, as="parsed")
+  httr::content(resp, as="parsed", encoding = encoding)
 
 }
 

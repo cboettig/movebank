@@ -9,10 +9,13 @@ tag_type <- movebank("tag_type")
 sensor <- movebank("sensor")
 sensor_test <- movebank("sensor", study_id=2238275)
 
+event_test <- movebank("event", study_id=2238275)
+individual <- movebank("individual", study_id=2238275)
+
 deployment <- movebank("deployment")
 
-individual <- movebank("individal")
-study_attribute <- movebank("study_attribute")
+individual <- movebank("individual", study_id=2238275)
+study_attribute <- movebank("study_attribute", study_id=2238275)
 tag<- movebank("tag")
 event <- movebank("event")
 

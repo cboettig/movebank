@@ -20,14 +20,42 @@ library("sf")
 readRenviron(".Renviron")
 ```
 
-Getting the full datasets can take a little while:
+
+For some endpoints we can successfully get the full table in a single call:
 
 ```{r message = FALSE}
-taxon <- movebank("taxon")
-study <- movebank("study")
+study <- movebank("study") ## temporal & geographic coverage, but no species coverage information
+taxon <- movebank("taxon") ## Purely a taxonomic database, has no connection to study
+tag_type <- movebank("tag_type") ## small table listing information the different types of animal tracker tags
+```
+
+Data tables for individual, tag, and event require a study-id to avoid a 500-error.
+
+```{r}
+movebank("individual", study_id=study$id[[1]])
+movebank("tag", study_id=study$id[[1]])
+movebank("event", study_id=study$id[[1]])
+```
+
+Let's see if we can get data from any of the `individual` tables. We'll try every study:
+
+```{r}
+individual <- map(study$id, safely(function(i) movebank("individual", study_id = i)))
+sapply(individual, class)
 ```
 
 
+
+```{r}
+sensor <- movebank("sensor", external_id=tag_type$external_id[[1]])
+```
+
+
+Connect taxonomic information to study data:  Taxonomic information can only be found in the "individual" table (which fortunately also has a key to `study_id`).  
+
+Unfortunately, most data in the `individual` table cannot be accepted 
+
+----
 
 Example: use `ritis` to search for all matches to a given higher-level taxonomic group, e.g. all birds, all reptiles.
 

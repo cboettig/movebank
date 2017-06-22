@@ -4,8 +4,8 @@
 
     {
     "@type": "DataCatalog",
-    "name": "Movebank",
     "@id": "https://www.movebank.org",
+    "name": "Movebank",
     "description": "Movebank is a free online infrastructure created to help researchers manage, share, analyze, and archive animal movement data. The Movebank project is coordinated by the Max Planck Institute for Ornithology, the North Carolina Museum of Natural Sciences, and the University of Konstanz. Movebank collaborates with the United Nations Food and Agriculture Organization (FAO), the Ohio State University, and the U.S. Geological Survey, and has received funding from the National Science Foundation, the German Science Foundation, and NASA. Movebank is has long-term (>20 years) funding through the Max Planck Society and the University of Konstanz and is intended to serve as a global data archive for animal movement data. \n Movebank has more than 13,000 users including people from universities, government agencies, and other research and conservation groups around the world. Movebank is a resource open to all researchers and organizations regardless of species, study area, or source of funding. Movebank users retain ownership of their data and can choose whether or not to make their data available to the public. We encourage collaborations between researchers, conservation groups, and government to re-use animal tracking data and give it a second life. \n The database is designed primarily for datasets that include multiple locations of individual animals, commonly referred to as tracking data. It also allows inclusion of a growing number of additional attributes, including descriptive information about animals and tags, manufacturer-specific measurements, and data from other bio-logging sensors attached to animals.",
     "creator": [
       {
@@ -28,6 +28,7 @@
     {
       "@type": "Dataset",
       "name": "study",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -40,6 +41,7 @@
   {
       "@type": "Dataset",
       "name": "individual",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -51,6 +53,7 @@
   {
       "@type": "Dataset",
       "name": "tag",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -62,6 +65,7 @@
   {
      "@type": "Dataset",
       "name": "sensor",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -73,6 +77,7 @@
   {
      "@type": "Dataset",
       "name": "tag_type",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -84,6 +89,7 @@
   {
      "@type": "Dataset",
       "name": "taxon",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -95,6 +101,7 @@
   {
      "@type": "Dataset",
       "name": "deployment",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -106,6 +113,7 @@
   {
      "@type": "Dataset",
       "name": "event",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
@@ -117,6 +125,7 @@
   {
      "@type": "Dataset",
       "name": "study_attribute",
+      "includedInDataCatalog": {"@id": "https://www.movebank.org"},
       "distribution":  {
         "@type":"DataDownload",
         "encodingFormat":"CSV",
